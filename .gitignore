@@ -1,0 +1,13 @@
+# Secrets -- never commit real credentials
+.env
+
+# Local run output -- contains real client/job names and downloaded files
+output/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Editor
+.vscode/
