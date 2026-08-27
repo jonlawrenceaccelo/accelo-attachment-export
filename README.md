@@ -156,23 +156,3 @@ endpoint turns out to have the same quirk.
   `TARGET_TYPES` in `export_attachments.py` with its endpoint, the field(s)
   needed for a display name, and a `name` lambda -- same shape as the six
   already there.
-
-## Turning this into a client-facing tool later
-
-The pipeline logic here (stages 1-4 in `export_attachments.py`) is the
-part that would carry over into a hosted app -- it doesn't care who's
-running it. What a real client-facing version would need on top:
-
-- Per-client OAuth (each client authorizes *their* Accelo account --
-  that's the standard "authorization code" grant, not the
-  client-credentials flow this script uses for your own account).
-- A job queue instead of a blocking script, since stage 2 alone could
-  take a while for a large client account.
-- Somewhere to land the files (e.g. zipped and handed back as a
-  download, or streamed straight to S3/Google Drive) rather than a
-  local `files/` folder.
-- Basic multi-tenant plumbing: storing each client's token, isolating
-  their output, not sharing rate-limit budget across clients.
-
-None of that needs to be decided now -- it's just what's different
-between "a script I run" and "a tool clients run themselves."
